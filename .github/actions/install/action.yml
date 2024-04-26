@@ -6,7 +6,6 @@ runs:
       shell: cmd
 
     - name: Install dependencies for npm
-      working-directory: python-greetings
       run: |
         npm install
         npm install -g pm2
