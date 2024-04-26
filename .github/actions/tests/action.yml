@@ -1,0 +1,22 @@
+inputs: 
+
+  environment:
+    description: 'Environment for node application'
+    default: 'dev'
+
+runs:
+
+  using: "composite"
+
+  steps:
+    - name: step info
+      run: echo Testing on ${{ inputs.environment }} has started
+      shell: cmd
+    
+    - name: Install dependencies
+      working-directory: course-js-api-framework
+      run: |
+        echo Testing books on ${{ inputs.environment }}
+        npm install
+        npm run greetings greetings_${{ inputs.environment }}
+      shell: cmd

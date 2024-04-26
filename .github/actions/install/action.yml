@@ -1,0 +1,15 @@
+runs:
+  using: "composite"
+  steps:
+    - name: step info
+      run: echo Installing all required dependencies
+      shell: cmd
+
+    - name: Install dependencies
+      working-directory: python-greetings
+      run: |
+        npm install
+        npm install -g pm2
+        pip install -r requirements.txt
+      shell: cmd
+

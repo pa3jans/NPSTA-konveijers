@@ -1,199 +1,121 @@
-# This is a basic workflow to help you get started with Actions
-
 name: python-greetings
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   install-pip-deps:
     name: install-pip-deps
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/build
-
-      # # Runs a single command using the runners shell
-      # - name: build success
-      #   run: echo build success
-
-      # - name: check node version
-      #   run: node -v
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'python-greetings'
+      - uses: ./.github/actions/install
 
   deploy-to-dev:
     name: deploy-to-dev
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [install-pip-deps]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with: 
-          port: 1234 # te jāsakrīt portiem ar to, kas norādīts config
-          environment: 'DEV'
-      # # Runs a single command using the runners shell
-      # - name: deploy success
-      #   run: echo deployment to DEV has started
+          port: 7001
+          environment: 'dev'
 
   tests-on-dev:
     name: tests-on-dev
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [deploy-to-dev]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
-      # # Runs a single command using the runners shell
-      # - name: tests success
-      #   run: echo testing on DEV has started
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
         with:
-          repository: 'pa3jans/api-automation'
-          path: 'api-tests'
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'course-js-api-framework'
       - uses: ./.github/actions/tests
         with: 
-          environment: 'BOOKS_DEV'
+          environment: 'dev'
   
   
   deploy-to-staging:
     name: deploy-to-staging
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [tests-on-dev]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with: 
-          port: 1234 # te jāsakrīt portiem ar to, kas norādīts config
-          environment: 'DEV'
-      # # Runs a single command using the runners shell
-      # - name: deploy success
-      #   run: echo deployment to DEV has started
+          port: 7002
+          environment: 'staging'
 
   tests-on-staging:
     name: tests-on-staging
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [deploy-to-staging]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
-      # # Runs a single command using the runners shell
-      # - name: tests success
-      #   run: echo testing on DEV has started
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: 'pa3jans/api-automation'
-          path: 'api-tests'
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/tests
         with: 
-          environment: 'BOOKS_DEV'
+          environment: 'staging'
 
 
   deploy-to-preprod:
     name: deploy-to-preprod
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [tests-on-staging]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with: 
-          port: 1234 # te jāsakrīt portiem ar to, kas norādīts config
-          environment: 'DEV'
-      # # Runs a single command using the runners shell
-      # - name: deploy success
-      #   run: echo deployment to DEV has started
+          port: 7003
+          environment: 'preprod'
 
   tests-on-preprod:
     name: tests-on-preprod
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [deploy-to-preprod]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
-      # # Runs a single command using the runners shell
-      # - name: tests success
-      #   run: echo testing on DEV has started
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: 'pa3jans/api-automation'
-          path: 'api-tests'
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/tests
         with: 
-          environment: 'BOOKS_DEV'
+          environment: 'preprod'
 
 
   deploy-to-prod:
     name: deploy-to-prod
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [tests-on-preprod]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/deploy
         with: 
-          port: 1234 # te jāsakrīt portiem ar to, kas norādīts config
-          environment: 'DEV'
-      # # Runs a single command using the runners shell
-      # - name: deploy success
-      #   run: echo deployment to DEV has started
+          port: 7004
+          environment: 'prod'
 
   tests-on-prod:
     name: tests-on-prod
-    # The type of runner that the job will run on
-    # runs-on: ubuntu-latest
     runs-on: self-hosted
     needs: [deploy-to-prod]
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-
-      # # Runs a single command using the runners shell
-      # - name: tests success
-      #   run: echo testing on DEV has started
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: 'pa3jans/api-automation'
-          path: 'api-tests'
+      - uses: actions/checkout@v3.5.2
       - uses: ./.github/actions/tests
         with: 
-          environment: 'BOOKS_DEV'
+          environment: 'prod'
