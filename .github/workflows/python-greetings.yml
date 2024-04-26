@@ -28,6 +28,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'python-greetings'
       - uses: ./.github/actions/deploy
         with: 
           port: 7001
@@ -56,6 +60,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'python-greetings'
       - uses: ./.github/actions/deploy
         with: 
           port: 7002
@@ -68,6 +76,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'course-js-api-framework'
       - uses: ./.github/actions/tests
         with: 
           environment: 'staging'
@@ -80,6 +92,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'python-greetings'
       - uses: ./.github/actions/deploy
         with: 
           port: 7003
@@ -92,6 +108,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'course-js-api-framework'
       - uses: ./.github/actions/tests
         with: 
           environment: 'preprod'
@@ -104,6 +124,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/python-greetings'
+          path: 'python-greetings'
       - uses: ./.github/actions/deploy
         with: 
           port: 7004
@@ -116,6 +140,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3.5.2
+      - uses: actions/checkout@v3.5.2
+        with:
+          repository: 'mtararujs/course-js-api-framework'
+          path: 'course-js-api-framework'
       - uses: ./.github/actions/tests
         with: 
           environment: 'prod'
