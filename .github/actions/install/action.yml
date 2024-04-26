@@ -5,11 +5,11 @@ runs:
       run: echo Installing all required dependencies
       shell: cmd
 
-    - name: Install dependencies for npm
-      run: |
-        npm install
-        npm install -g pm2
-      shell: cmd
+    # - name: Install dependencies for npm
+    #   run: |
+    #     npm install
+    #     npm install -g pm2
+    #   shell: cmd
 
     - name: Install dependencies for pip
       working-directory: python-greetings
